@@ -1,16 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
-import Catagory from "./components/Catagory";
-
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/layouts/header";
+import Menu from "./components/layouts/menu";
+import Home from "./components/pages/Home";
+import Category from "./components/pages/Category";
+import Product from "./components/pages/Product";
+import Cart from "./components/pages/Cart";
 function App() {
-      const c = {
-        name: "Smart Phone",
-        count: 3
-      };
+      
       return (
-        <div className='container'>
-          <Catagory cat={c} />
+        <div className="app">
+          <Header />
+          <Menu />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/category" element={<Category/>} />
+              <Route path="/product" element={<Product/>} />
+              <Route path="/cart" element={<Cart/>} />
+            </Routes>
+          </main>
+
         </div>
       );
 }
