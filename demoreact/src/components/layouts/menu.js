@@ -1,6 +1,18 @@
 import { NavLink } from "react-router-dom";
-
+import {Navbar,NavDropdown,Nav} from 'react-bootstrap';
+import { useEffect, useState } from "react";
 export default function Menu(props){
+    const [categories,setCategories] = useState([]);
+    const loadCategories = ()=>{
+        const url = `https://dummyjson.com/products/categories`;
+        fetch(url).then(data=>data.json())
+        .then(data=>{
+            setCategories(data);
+        })
+    }
+    useEffect(()=>{
+        loadCategories();
+    },[]);
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container">
@@ -11,19 +23,37 @@ export default function Menu(props){
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <NavLink to="/" className={"nav-link"}> Home </NavLink>
+                        <NavLink to="/" className="nav-link">Home</NavLink>
                     </li>
                     <li className="nav-item">
-                    <NavLink to="/category" className={"nav-link"}> Category </NavLink>
+                        <Navbar.Collapse id="navbar-dark-example">
+                            <Nav>
+                                <NavDropdown
+                                id="nav-dropdown-dark-example"
+                                title="Category"
+                                menuVariant="dark"
+                                >
+                                    {
+                                        categories.map((e,i)=>{
+                                            return (<NavDropdown.Item key={i} className="text-capitalize">{e}</NavDropdown.Item>)
+                                        })
+                                    }
+                                
+                               
+                                </NavDropdown>
+                            </Nav>
+                        </Navbar.Collapse>
                     </li>
                     <li className="nav-item">
-                    <NavLink to="/product" className={"nav-link"}> Product </NavLink>
+                        <NavLink to="/product" className="nav-link">Product</NavLink>
                     </li>
                     <li className="nav-item">
-                    <NavLink to="/cart" className={"nav-link"}> Cart </NavLink>
+                        <NavLink to="/cart" className="nav-link">Cart</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/weather" className="nav-link">Weather</NavLink>
                     </li>
                 </ul>
-
                 <form className="d-flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit">Search</button>
@@ -33,4 +63,3 @@ export default function Menu(props){
             </nav>
     );
 }
-
