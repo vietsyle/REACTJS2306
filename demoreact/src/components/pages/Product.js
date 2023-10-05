@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import Context from "../../context/context";
+import ACTION from "../../context/action";
 // Global state: state dành cho tòan bộ web, tức là component nào cũng có thể sử dụng
 function Product(){
     const {id} = useParams();
@@ -27,8 +28,10 @@ function Product(){
         const cart = state.cart;
         cart.push(product);
         // setState({...state,cart:cart});
-        dispatch({type:"UPDATE_CART",payload:cart});
-
+        dispatch({type:ACTION.UPDATE_CART,payload:cart});
+        setTimeout(()=>{
+            dispatch({type:ACTION.HIDE_LOADING})
+        },1000)
     }
     return (
         <div className="container">
